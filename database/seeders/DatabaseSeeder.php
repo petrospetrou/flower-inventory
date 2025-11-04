@@ -13,13 +13,19 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
-    {
-        // User::factory(10)->create();
+    public function run(): void {
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-    }
+        // Create sample categories
+        $roses = \App\Models\Category::create(['name'=>'Roses']);
+        $tulips = \App\Models\Category::create(['name'=>'Tulips']);
+
+        // Insert multiple sample flowers
+        \App\Models\Flower::insert([
+            ['category_id'=>$roses->id,'name'=>'Red Rose','type'=>'Hybrid Tea','price'=>3.50],
+            ['category_id'=>$roses->id,'name'=>'White Rose','type'=>'Floribunda','price'=>3.20],
+            ['category_id'=>$tulips->id,'name'=>'Yellow Tulip','type'=>'Single Early','price'=>2.10],
+            ['category_id'=>$tulips->id,'name'=>'Purple Tulip','type'=>'Triumph','price'=>2.40],
+    ]);
+}
+
 }
