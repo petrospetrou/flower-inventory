@@ -1,48 +1,62 @@
 @csrf
+@php
+  // Safely format price for the number input (avoids "2.4" vs "2.40")
+  $priceValue = old('price', isset($flower) ? number_format($flower->price, 2, '.', '') : '');
+@endphp
+
 <div class="row">
   <div class="col">
-    <label>Category</label>
-    <select name="category_id" required>
+    <label for="category_id">Category</label>
+    <select id="category_id" name="category_id" required aria-describedby="category_id_hint @error('category_id') category_id_error @enderror">
       <option value="">-- choose --</option>
       @foreach($categories as $c)
         <option value="{{ $c->id }}" @selected(old('category_id', $flower->category_id ?? '') == $c->id)>{{ $c->name }}</option>
       @endforeach
     </select>
-    @error('category_id') <small style="color:#b00">{{ $message }}</small> @enderror
+    <small id="category_id_hint" class="hint">Pick the group this flower belongs to.</small>
+    @error('category_id') <small id="category_id_error" role="alert" style="color:#b00">{{ $message }}</small> @enderror
   </div>
+
   <div class="col">
-    <label>Name</label>
-    <input name="name" value="{{ old('name', $flower->name ?? '') }}" required>
-    @error('name') <small style="color:#b00">{{ $message }}</small> @enderror
+    <label for="name">Name</label>
+    <input id="name" name="name" value="{{ old('name', $flower->name ?? '') }}" required placeholder="e.g., Red Rose" aria-describedby="name_hint @error('name') name_error @enderror">
+    <small id="name_hint" class="hint">Short, descriptive (e.g., “Red Rose”).</small>
+    @error('name') <small id="name_error" role="alert" style="color:#b00">{{ $message }}</small> @enderror
   </div>
 </div>
 
 <div class="row">
   <div class="col">
-    <label>Type</label>
-    <input name="type" value="{{ old('type', $flower->type ?? '') }}">
-    @error('type') <small style="color:#b00">{{ $message }}</small> @enderror
+    <label for="type">Type</label>
+    <input id="type" name="type" value="{{ old('type', $flower->type ?? '') }}" placeholder="e.g., Hybrid Tea" aria-describedby="type_hint @error('type') type_error @enderror">
+    <small id="type_hint" class="hint">Optional subtype (e.g., “Hybrid Tea”).</small>
+    @error('type') <small id="type_error" role="alert" style="color:#b00">{{ $message }}</small> @enderror
   </div>
+
   <div class="col">
-    <label>Price</label>
-    <input type="number" step="0.01" name="price" value="{{ old('price', $flower->price ?? '') }}" required>
-    @error('price') <small style="color:#b00">{{ $message }}</small> @enderror
+    <label for="price">Price</label>
+    <input id="price" type="number" step="0.01" min="0" inputmode="decimal" name="price"
+           value="{{ $priceValue }}" required placeholder="0.00"
+           aria-describedby="price_hint @error('price') price_error @enderror">
+    <small id="price_hint" class="hint">Numeric only, no currency symbol.</small>
+    @error('price') <small id="price_error" role="alert" style="color:#b00">{{ $message }}</small> @enderror
   </div>
 </div>
 
 <div>
-  <label>Description</label>
-  <textarea name="description" rows="3">{{ old('description', $flower->description ?? '') }}</textarea>
-  @error('description') <small style="color:#b00">{{ $message }}</small> @enderror
+  <label for="description">Description</label>
+  <textarea id="description" name="description" rows="3" placeholder="Optional notes about this flower"
+            aria-describedby="description_hint @error('description') description_error @enderror">{{ old('description', $flower->description ?? '') }}</textarea>
+  <small id="description_hint" class="hint">Shown on the details page.</small>
+  @error('description') <small id="description_error" role="alert" style="color:#b00">{{ $message }}</small> @enderror
 </div>
 
-{{-- If you do Day 3 uploads, uncomment:
-<div>
-  <label>Image</label>
-  <input type="file" name="image" accept="image/*">
-  @error('image') <small style="color:#b00">{{ $message }}</small> @enderror
-</div>
---}}
+{{-- If you add uploads on Day 3, make sure the <form> tag has enctype="multipart/form-data" --}}
+{{-- <div>
+  <label for="image">Image</label>
+  <input id="image" type="file" name="image" accept="image/*" aria-describedby="@error('image') image_error @enderror">
+  @error('image') <small id="image_error" role="alert" style="color:#b00">{{ $message }}</small> @enderror
+</div> --}}
 
 <div style="margin-top:.5rem">
   <button class="btn btn-primary" type="submit">{{ $submit ?? 'Save' }}</button>

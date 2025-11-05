@@ -75,4 +75,10 @@ class FlowerController extends Controller
         $this->flowers->delete($id);
         return redirect()->route('flowers.index')->with('ok', 'Flower deleted');
     }
+
+    public function confirmDestroy(int $id)
+    {
+        $flower = $this->flowers->find($id);
+        return view('flowers.delete', compact('flower'));
+    }
 }
