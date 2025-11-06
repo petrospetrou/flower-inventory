@@ -11,6 +11,7 @@ class FlowerServiceTest extends TestCase
 {
     use RefreshDatabase;
 
+    // Test that a flower can be created and stored correctly in the database
     public function test_can_create_flower(): void
     {
         $category = Category::factory()->create(['name' => 'Tulips']);

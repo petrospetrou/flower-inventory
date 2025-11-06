@@ -11,6 +11,7 @@ class CategoryServiceTest extends TestCase
 {
     use RefreshDatabase;
 
+    // Test that a category can be created, stored, and retrieved successfully
     public function test_can_create_and_find_category(): void
     {
         /** @var CategoryServiceInterface $svc */
@@ -24,6 +25,7 @@ class CategoryServiceTest extends TestCase
         $this->assertEquals('Roses', $found->name);
     }
 
+    // Test that a category can be updated and deleted correctly
     public function test_can_update_and_delete_category(): void
     {
         $category = Category::factory()->create(['name' => 'OldName']);
