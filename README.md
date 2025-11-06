@@ -291,4 +291,3 @@ sequenceDiagram
 ---
 
 Author: Petros Petrou
-Built with: Laravel 11, SQL Server, Docker, PHP 8.2, Blade, Eloquent
