@@ -35,6 +35,7 @@ Implements a clean architecture with service layers, CRUD operations, search, so
 - Service layer architecture (interfaces, bindings, DI)
 - Search, Sort, Pagination on flower list
 - Validation and Error handling
+- Optional image upload (implemented) with storage linking and validation
 - Optional image upload (stored via Laravel public disk)
 - Logging using Monolog
 - Seed data (two categories, four flowers)
