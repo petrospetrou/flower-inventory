@@ -39,25 +39,39 @@ a{color:var(--brand);text-decoration:none}
 a:hover{text-decoration:none;filter:brightness(0.9)}
 
 
-/* Buttons */
+/* Universal Button Style */
 .btn {
   display: inline-block;
   padding: .5rem .75rem;
-  border: 1px solid var(--line);
+  border: 1px solid transparent;
   border-radius: .5rem;
-  background: #fff;
-}
-.btn:hover { background: #f9fafb; }
-.btn-primary {
   background: var(--brand);
-  border-color: var(--brand);
   color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s ease, box-shadow .15s ease, transform .1s ease;
 }
-.btn-primary:hover { filter: brightness(.95); }
-.btn-danger {
-  background: var(--danger);
-  border-color: var(--danger);
-  color: #fff;
+
+/* Hover + Active effect for all buttons */
+.btn:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  filter: brightness(.95);
+  transform: translateY(0);
+}
+
+/* Optional disabled look */
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
 /* Panels and layout helpers */
