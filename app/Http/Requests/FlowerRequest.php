@@ -27,7 +27,8 @@ class FlowerRequest extends FormRequest
             'type'        => ['nullable', 'string', 'max:255'],
             'price'       => ['required', 'numeric', 'min:0'],
             'description' => ['nullable', 'string'],
-            // 'image' => ['nullable','image','max:2048'], // if you add upload on Day 3
+            'image' => ['nullable','image','max:2048'], 
+            'remove_image'=> ['nullable','boolean'],
         ];
     }
 

@@ -85,6 +85,12 @@ class FlowerService implements FlowerServiceInterface
 
         Log::info('Flower updated', ['id' => $flower->id]);
 
+        $flower = Flower::findOrFail($id);
+
+        // DO NOT array_filter() here — we want to allow null to clear fields
+        $flower->fill($data);
+        $flower->save();
+
         return $flower->fresh('category');
     }
 
