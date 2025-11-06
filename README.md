@@ -31,64 +31,63 @@ Implements a clean architecture with service layers, CRUD operations, search, so
 
 ## Features
 
-- CRUD operations for *Categories* and *Flowers*  
-- One-to-Many relationship: Category → Flowers  
-- Service layer architecture (interfaces, bindings, DI)  
-- Search, Sort, Pagination on flower list  
-- Validation and Error handling  
-- Optional image upload (stored via Laravel’s public disk)  
-- Logging using Monolog  
-- Seed data (two categories, four flowers)  
-- SQL scripts to recreate the database manually  
-- Unit test (FlowerServiceTest)  
-- Clean Git history and documentation  
+- CRUD operations for Categories and Flowers
+- One-to-Many relationship: Category -> Flowers
+- Service layer architecture (interfaces, bindings, DI)
+- Search, Sort, Pagination on flower list
+- Validation and Error handling
+- Optional image upload (stored via Laravel public disk)
+- Logging using Monolog
+- Seed data (two categories, four flowers)
+- SQL scripts to recreate the database manually
+- Unit test (FlowerServiceTest)
+- Clean Git history and documentation
 
 ---
 
 ## Architecture Overview
 
 ```mermaid
-graph TD
-    U[User (Browser)]:::actor
-    subgraph L[Laravel App]
-      direction LR
-      subgraph HTTP[HTTP Layer]
-        R[Routes (web.php)]
-        MC[Controllers]
-        Vw[Blade Views]
-        VR[Form Requests]
-      end
-      subgraph CORE[Core Logic]
-        SVC[Service Layer]
-        M[Eloquent Models]
-        PAG[Search • Sort • Pagination]
-        LOG[Logging]
-      end
-      subgraph IO[Storage]
-        FS[(public disk)]
-        UP[Image Upload]
-      end
-    end
-    subgraph DB[(SQL Server in Docker)]
-      T1[[categories]]
-      T2[[flowers]]
-    end
-    U --> R --> MC --> SVC --> M --> DB
-    MC --> Vw
-    MC --> FS
-    SVC --> LOG
-    classDef actor fill:#eef,stroke:#88f,color:#000
+flowchart TD
+  U["User (Browser)"]
+
+  subgraph L["Laravel App"]
+    R["Routes (web.php)"]
+    C["Controllers"]
+    V["Blade Views"]
+    Q["Form Requests"]
+    S["Service Layer"]
+    M["Eloquent Models"]
+    P["Search, Sort, Pagination"]
+    G["Logging"]
+    F["public disk"]
+    I["Image Upload"]
+  end
+
+  subgraph DB["SQL Server in Docker"]
+    T1["categories"]
+    T2["flowers"]
+  end
+
+  U --> R
+  R --> C
+  C --> S
+  S --> M
+  M --> DB
+  C --> V
+  C --> F
+  S --> G
 ```
 
 ---
 
 ## Requirements
 
-- PHP 8.2+ and Composer  
-- Docker (used for SQL Server container)  
-- SQL Server drivers for PHP (`pdo_sqlsrv`, `sqlsrv`)  
-- Git  
-- (Optional) Database client such as Azure Data Studio or DBeaver  
+- PHP 8.2+ and Composer
+- Docker (used for SQL Server container)
+- SQL Server drivers for PHP (pdo_sqlsrv, sqlsrv)
+- Git
+- (Optional) Database client such as Azure Data Studio or DBeaver
 
 ---
 
@@ -171,7 +170,7 @@ Feature tests are located under `tests/Feature/`.
 
 ## Environment Setup
 
-The `.env` file is excluded for security.  
+The `.env` file is excluded for security.
 
 After cloning:
 ```bash
@@ -189,7 +188,7 @@ Located under `/database/sql/`:
 
 | File | Purpose |
 |------|----------|
-| 01_create_database.sql | Creates the `FlowerShop` database |
+| 01_create_database.sql | Creates the FlowerShop database |
 | 02_create_tables.sql | Defines schema for categories and flowers |
 | 03_seed.sql | Inserts sample data |
 
@@ -231,12 +230,12 @@ flower-inventory/
 erDiagram
     CATEGORY ||--o{ FLOWER : has
     CATEGORY {
-        int id PK
-        string name UNIQUE
+        int id
+        string name
     }
     FLOWER {
-        int id PK
-        int category_id FK
+        int id
+        int category_id
         string name
         string type
         decimal price
@@ -263,50 +262,50 @@ sequenceDiagram
 
 ## Challenges Faced
 
-1. **SQLSRV Driver Installation on macOS**  
-   Installing `sqlsrv` and `pdo_sqlsrv` via PECL repeatedly failed on Apple Silicon due to compilation and permission errors.  
-   Fixed by manually compiling the extensions and linking them directly to PHP’s config directory.
+1. SQLSRV Driver Installation on Apple Silicon (PECL failures)  
+   Installing sqlsrv and pdo_sqlsrv via PECL failed due to compilation and permission issues.  
+   Fixed by manually compiling both extensions and linking the built .so files via custom conf.d entries.
 
-2. **SQL Server SSL Certificate Error**  
-   Laravel migrations failed with an SSL self-signed certificate error.  
-   Solved by updating `config/database.php` and `.env` to trust the Docker container’s self-signed certificate using `trust_server_certificate=true`.
+2. SQL Server SSL Certificate Error  
+   Migrations failed due to self-signed certificate rejection (ODBC 18+).  
+   Solved by enabling encrypted connections while trusting the server certificate in config/database.php and .env for local development.
 
-3. **Testing Failures (Missing HasFactory Trait)**  
-   Feature tests initially failed with `BadMethodCallException: factory()` errors.  
-   Resolved by adding the `HasFactory` trait to models and creating proper factory files for both `Category` and `Flower`.
+3. Testing Failures (Missing HasFactory)  
+   Feature tests failed with factory() errors.  
+   Resolved by adding HasFactory to models and creating factories for Category and Flower.
 
-4. **CSS Not Loading**  
-   Pages rendered without styling due to incorrect CSS file paths and Blade syntax.  
-   Fixed by moving styles to `/public/css` and correcting the asset reference to `{{ asset('css/style.css') }}`.
+4. CSS Not Loading  
+   The layout loaded without styles because the CSS was outside public/ and the Blade asset call was invalid.  
+   Fixed by moving styles to public/css/ and using {{ asset('css/style.css') }} with cache-busting.
 
-5. **Image Upload & Deletion Issues**  
-   Encountered several problems including permission errors, missing form encoding, nullable database fields, and improper file deletions.  
-   Fixed by using correct form attributes (`multipart/form-data`), ensuring public storage linking, validating optional uploads, and cleaning old files via `Storage::disk('public')->delete()`.
+5. Image Upload and Deletion  
+   Issues included missing multipart/form-data, permissions, nullable DB field handling, and orphaned files.  
+   Fixed via proper validation, php artisan storage:link, and deleting old files with Storage::disk('public')->delete().
 
 ---
 
 ## Notes & Assumptions
 
-- `.env` excluded from repository.  
-- The Docker password is a placeholder for local use only.  
-- SQL Server 2022 container required.  
-- Images stored in `storage/app/public/flowers`.  
-- Blade uses minimal styling.  
-- Logging handled via Laravel’s Monolog.
+- .env is excluded from the repository.
+- The Docker password in examples is a local placeholder only.
+- SQL Server 2022 container is required.
+- Images are stored in storage/app/public/flowers (served via public/storage symlink).
+- Minimal Blade styling.
+- Logging via Laravel Monolog.
 
 ---
 
 ## Future Improvements
 
-- Add authentication (Laravel Breeze)  
-- REST API endpoints  
-- Tailwind CSS interface  
-- Docker Compose setup for full environment  
-- Additional tests for filtering and sorting  
-- Image optimization and versioning  
+- Add authentication (Laravel Breeze)
+- Expose REST API endpoints
+- Tailwind CSS interface
+- Docker Compose for full environment
+- Additional tests for filtering and sorting
+- Image optimization and versioning
 
 ---
 
-**Author:** Petros  
-**Built with:** Laravel 11, SQL Server, Docker, PHP 8.2, Blade, Eloquent  
-**License:** MIT
+Author: Petros  
+Built with: Laravel 11, SQL Server, Docker, PHP 8.2, Blade, Eloquent  
+License: MIT
