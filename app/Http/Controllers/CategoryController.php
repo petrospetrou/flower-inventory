@@ -41,4 +41,9 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('categories.index')->with('ok','Category deleted');
     }
+
+    public function confirmDestroy(Category $category)
+    {
+        return view('categories.delete', compact('category'));
+    }
 }

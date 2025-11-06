@@ -1,0 +1,221 @@
+:root {
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --brand: #0a58ca;
+  --danger: #dc2626;
+  --r: .6rem;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  color: var(--ink);
+  background: #fff;
+}
+
+header, nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+a {
+  color: var(--brand);
+  text-decoration: none;
+}
+
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:none;filter:brightness(0.9)}
+
+
+/* Base Button Style */
+.btn {
+  display: inline-block;
+  padding: .5rem .75rem;
+  border: 1px solid var(--line);
+  border-radius: .5rem;
+  background: #fff;
+  color: #111;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s ease, box-shadow .15s ease, transform .1s ease, filter .15s ease;
+}
+
+/* Hover + Active effects */
+.btn:hover {
+  background: #f9fafb;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  filter: brightness(.95);
+  transform: translateY(0);
+}
+
+/* Primary (Blue) */
+.btn-primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--brand);
+  filter: brightness(1.05);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Danger (Red) */
+.btn-danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+.btn-danger:hover {
+  background: var(--danger);
+  filter: brightness(1.05);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Disabled */
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Panels and layout helpers */
+.panel {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 12px;
+  background: #fff;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: .5rem 0;
+}
+.flash {
+  background: #e6ffed;
+  border: 1px solid #b7f5c8;
+  padding: .5rem .75rem;
+  border-radius: .5rem;
+  margin: .5rem 0;
+}
+
+/* Forms */
+label { display: block; margin: .25rem 0; }
+input, select, textarea {
+  width: 100%;
+  padding: .55rem .65rem;
+  border: 1px solid var(--line);
+  border-radius: .4rem;
+  background: #fff;
+  transition: border-color .15s, box-shadow .15s;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+}
+.hint {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 6px;
+  word-break: break-word;
+}
+
+/* Checkbox row for image removal */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: .75rem;
+  padding: .5rem .75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: #fff;
+  width: fit-content;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+.checkbox-row label,
+.checkbox-row span {
+  font-size: .9rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* Responsive form grid */
+.row {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+}
+.col { min-width: 0; }
+
+.filters {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  margin: .5rem 0;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  overflow: hidden;
+  background: #fff;
+}
+thead th {
+  background: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+}
+th, td {
+  padding: .7rem .8rem;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+tbody tr:hover { background: #f8fafc; }
+tbody tr:last-child td { border-bottom: none; }
+.actions { white-space: nowrap; }
+.actions a, .actions button { margin-right: .25rem; }
+
+/* Ensure consistent button fonts across browsers */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
