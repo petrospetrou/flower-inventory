@@ -142,6 +142,33 @@ input:focus, select:focus, textarea:focus {
   word-break: break-word;
 }
 
+/* Checkbox row for image removal */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: .75rem;
+  padding: .5rem .75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: #fff;
+  width: fit-content;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+.checkbox-row label,
+.checkbox-row span {
+  font-size: .9rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+
 /* Responsive form grid */
 .row {
   display: grid;
@@ -182,3 +209,13 @@ tbody tr:hover { background: #f8fafc; }
 tbody tr:last-child td { border-bottom: none; }
 .actions { white-space: nowrap; }
 .actions a, .actions button { margin-right: .25rem; }
+
+/* Ensure consistent button fonts across browsers */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}

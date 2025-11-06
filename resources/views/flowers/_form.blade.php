@@ -59,7 +59,7 @@
 
 @if(isset($flower) && $flower->image_path)
   <div style="margin-top:.5rem">
-    <strong>Current image:</strong><br>
+    <strong>Flower Image:</strong><br>
     <img src="{{ asset('storage/'.$flower->image_path) }}"
          alt="{{ $flower->name }}"
          style="max-width:160px;height:auto;object-fit:cover;border:1px solid #ddd;border-radius:6px;">
@@ -68,12 +68,13 @@
   {{-- Hidden input ensures the key posts even when unchecked --}}
   <input type="hidden" name="remove_image" value="0">
 
-  <div style="margin-top:.5rem">
-    <label>
-      <input type="checkbox" name="remove_image" value="1" {{ old('remove_image') ? 'checked' : '' }}>
-      Remove current image
+  @if(isset($flower) && $flower->image_path)
+    <label class="checkbox-row" for="remove_image">
+      <input id="remove_image" type="checkbox" name="remove_image" value="1">
+      <span>Remove current image</span>
     </label>
-  </div>
+  @endif
+
 @endif
 
 <div style="margin-top:.5rem">
