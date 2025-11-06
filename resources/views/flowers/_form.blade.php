@@ -51,12 +51,30 @@
   @error('description') <small id="description_error" role="alert" style="color:#b00">{{ $message }}</small> @enderror
 </div>
 
-{{-- If you add uploads on Day 3, make sure the <form> tag has enctype="multipart/form-data" --}}
-{{-- <div>
+<div>
   <label for="image">Image</label>
   <input id="image" type="file" name="image" accept="image/*" aria-describedby="@error('image') image_error @enderror">
   @error('image') <small id="image_error" role="alert" style="color:#b00">{{ $message }}</small> @enderror
-</div> --}}
+</div>
+
+@if(isset($flower) && $flower->image_path)
+  <div style="margin-top:.5rem">
+    <strong>Current image:</strong><br>
+    <img src="{{ asset('storage/'.$flower->image_path) }}"
+         alt="{{ $flower->name }}"
+         style="max-width:160px;height:auto;object-fit:cover;border:1px solid #ddd;border-radius:6px;">
+  </div>
+
+  {{-- Hidden input ensures the key posts even when unchecked --}}
+  <input type="hidden" name="remove_image" value="0">
+
+  <div style="margin-top:.5rem">
+    <label>
+      <input type="checkbox" name="remove_image" value="1" {{ old('remove_image') ? 'checked' : '' }}>
+      Remove current image
+    </label>
+  </div>
+@endif
 
 <div style="margin-top:.5rem">
   <button class="btn btn-primary" type="submit">{{ $submit ?? 'Save' }}</button>
