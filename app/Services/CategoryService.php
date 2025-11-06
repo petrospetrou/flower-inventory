@@ -73,7 +73,6 @@ class CategoryService implements CategoryServiceInterface
     {
         $category = Category::findOrFail($id);
 
-        // This will cascade delete flowers if your foreign key is ON DELETE CASCADE
         $deleted = $category->delete();
 
         Log::info('Category deleted', ['id' => $id]);

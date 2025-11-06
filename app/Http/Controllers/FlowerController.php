@@ -12,6 +12,7 @@ class FlowerController extends Controller
 {
     public function __construct(private FlowerServiceInterface $flowers) {}
 
+    // Display a paginated list of flowers with filtering and sorting
     public function index(Request $request)
     {
         $filters = [
@@ -27,12 +28,14 @@ class FlowerController extends Controller
         return view('flowers.index', compact('items', 'categories'));
     }
 
+    // Show the form for creating a new flower
     public function create()
     {
         $categories = Category::orderBy('name')->get();
         return view('flowers.create', compact('categories'));
     }
 
+    // Store a newly created flower in the database
     public function store(FlowerRequest $request)
     {
         $data = $request->validated();
@@ -46,12 +49,14 @@ class FlowerController extends Controller
         return redirect()->route('flowers.index')->with('ok', 'Flower created');
     }
 
+    // Display details of a specific flower
     public function show(int $id)
     {
         $flower = $this->flowers->find($id);
         return view('flowers.show', compact('flower'));
     }
 
+    // Show the form for editing an existing flower
     public function edit(int $id)
     {
         $flower = $this->flowers->find($id);
@@ -59,6 +64,7 @@ class FlowerController extends Controller
         return view('flowers.edit', compact('flower', 'categories'));
     }
 
+    // Update an existing flower with new data and manage image changes
     public function update(FlowerRequest $request, int $id)
     {
         $data = $request->validated();
@@ -84,6 +90,7 @@ class FlowerController extends Controller
         return redirect()->route('flowers.index')->with('ok', 'Flower updated');
     }
 
+    // Delete a flower and its associated image file
     public function destroy(int $id)
     {
         // Clean up file on disk (if any) before deleting the record
@@ -96,6 +103,7 @@ class FlowerController extends Controller
         return redirect()->route('flowers.index')->with('ok', 'Flower deleted');
     }
 
+    // Show a confirmation page before deleting a flower
     public function confirmDestroy(int $id)
     {
         $flower = $this->flowers->find($id);
