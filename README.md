@@ -25,7 +25,6 @@ Implements a clean architecture with service layers, CRUD operations, search, so
     - [Create Flower Sequence](#create-flower-sequence)
   - [Challenges Faced](#challenges-faced)
   - [Notes \& Assumptions](#notes--assumptions)
-  - [Future Improvements](#future-improvements)
 
 ---
 
@@ -64,7 +63,7 @@ flowchart TD
     I["Image Upload"]
   end
 
-  subgraph DB["SQL Server in Docker"]
+  subgraph DB["SQL Server"]
     T1["categories"]
     T2["flowers"]
   end
@@ -98,7 +97,7 @@ flowchart TD
 
 1. Clone and install:
    ```bash
-   git clone <your_repo_url>
+   git clone https://github.com/petrospetrou/flower-inventory.git
    cd flower-inventory
    composer install
    cp .env.example .env
@@ -286,26 +285,10 @@ sequenceDiagram
 
 ## Notes & Assumptions
 
-- .env is excluded from the repository.
-- The Docker password in examples is a local placeholder only.
 - SQL Server 2022 container is required.
 - Images are stored in storage/app/public/flowers (served via public/storage symlink).
-- Minimal Blade styling.
-- Logging via Laravel Monolog.
 
 ---
 
-## Future Improvements
-
-- Add authentication (Laravel Breeze)
-- Expose REST API endpoints
-- Tailwind CSS interface
-- Docker Compose for full environment
-- Additional tests for filtering and sorting
-- Image optimization and versioning
-
----
-
-Author: Petros  
-Built with: Laravel 11, SQL Server, Docker, PHP 8.2, Blade, Eloquent  
-License: MIT
+Author: Petros Petrou
+Built with: Laravel 11, SQL Server, Docker, PHP 8.2, Blade, Eloquent
