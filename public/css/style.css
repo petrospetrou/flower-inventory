@@ -39,24 +39,24 @@ a{color:var(--brand);text-decoration:none}
 a:hover{text-decoration:none;filter:brightness(0.9)}
 
 
-/* Universal Button Style */
+/* Base Button Style */
 .btn {
   display: inline-block;
   padding: .5rem .75rem;
-  border: 1px solid transparent;
+  border: 1px solid var(--line);
   border-radius: .5rem;
-  background: var(--brand);
-  color: #fff;
+  background: #fff;
+  color: #111;
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
-  transition: background .15s ease, box-shadow .15s ease, transform .1s ease;
+  transition: background .15s ease, box-shadow .15s ease, transform .1s ease, filter .15s ease;
 }
 
-/* Hover + Active effect for all buttons */
+/* Hover + Active effects */
 .btn:hover {
-  filter: brightness(1.05);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  background: #f9fafb;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   transform: translateY(-1px);
 }
 
@@ -65,7 +65,31 @@ a:hover{text-decoration:none;filter:brightness(0.9)}
   transform: translateY(0);
 }
 
-/* Optional disabled look */
+/* Primary (Blue) */
+.btn-primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--brand);
+  filter: brightness(1.05);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Danger (Red) */
+.btn-danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+.btn-danger:hover {
+  background: var(--danger);
+  filter: brightness(1.05);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Disabled */
 .btn:disabled,
 .btn[disabled] {
   opacity: 0.6;
